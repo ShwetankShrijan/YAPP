@@ -64,7 +64,8 @@ function App() {
     const [selectedCool,setSelectedCool] = useState<number | null>(null);
     const [selectedPSU,setSelectedPSU] = useState<number | null>(null);
 
-    // To save the 
+    // To save the selected items and send the id back
+     
 
     useEffect(() => {
         Promise.all([fetch("/api/cases"),
@@ -94,8 +95,48 @@ function App() {
             console.error("Error connecting to server: ",error);
             setLoad(false);
         });
-    }, []);
+    },
+    []);
 
+    async function check(){
+        const selectedBuild = {
+            caseID: selectedCase,
+            cpuID: selectedCPU,
+            mbID: selectedMB,
+            gpuID: selectedGPU,
+            ramID: selectedRAM,
+            storID: selectedStore,
+            coolID: selectedCool,
+            psuID: selectedPSU
+        };
+        try{
+            const response = await fetch('/api/check',{
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(selectedBuild),
+            });
+            const result = await response.json();
+            console.log("Server response:", result);
+            // Reset the selected items after clicking submit button
+            setSelectedCase(null);
+            setSelectedCPU(null);
+            setSelectedGPU(null);
+            setSelectedMB(null);
+            setSelectedRAM(null);
+            setSelectedStore(null);
+            setSelectedCool(null);
+            setSelectedPSU(null);
+
+        } catch (error){
+            console.error("Error sending selected build:", error);
+        }
+
+    }
+    async function save(){
+        console.log("hi");
+    }
     if(loading){
         return(
             <div>
@@ -106,137 +147,159 @@ function App() {
 
     return (
         <div>
-            <h1>BuildForge</h1>
-            <h3>Price Analyzer and Compatibility Checker</h3>
+            <nav className="navbar">
+              <div className="nav-logo">
+                <h1>BuildForge</h1>
+                <h3>Price Analyzer and Compatibility Checker</h3>
+              </div>
+              <ul className="nav-links">
+                <li><a href="#parts">Parts</a></li>
+                <li><a href="#analyzer">Analyzer</a></li>
+                <li><a href="#saved">Saved Builds</a></li>
+              </ul>
+            </nav>
+
+            <div id="compat">
+                <h2>Build PC</h2>
+            </div>
             <div className="grid-container">
-            <div className="parts">
-                <h2>Case</h2>
-                {Array.isArray(cases) && cases.length > 0 ? (
-                cases.map((pcCase) => (
-                    <p 
-                        key={pcCase.id} 
-                        className={`partItems ${selectedCase === pcCase.id ? 'selected' : ''}`}
-                        onClick = {() => setSelectedCase(pcCase.id)}
-                    >
-                        {pcCase.brand} {pcCase.model}
-                    </p>
-                ))
-            ) : (
-                <p>Loading or no cases found...</p>
-            )}
-            </div>
-            <div className="parts">
-                <h2>CPU</h2>
-                {Array.isArray(cpus) && cpus.length > 0 ? (
-                cpus.map((pcCPU) => (
-                    <p 
-                        key={pcCPU.id} 
-                        className={`partItems ${selectedCPU === pcCPU.id ? 'selected' : ''}`}
-                        onClick = {() => setSelectedCPU(pcCPU.id)}
-                    >
-                        {pcCPU.brand} {pcCPU.model}
-                    </p>
-                ))
-            ) : (
-                <p>Loading or no cases found...</p>
-            )}
-            </div>
-            <div className="parts">
-                <h2>GPU</h2>
-                {Array.isArray(gpus) && gpus.length > 0 ? (
-                gpus.map((pcGPU) => (
-                    <p 
-                        key={pcGPU.id} 
-                        className={`partItems ${selectedGPU === pcGPU.id ? 'selected' : ''}`}
-                        onClick = {() => setSelectedGPU(pcGPU.id)}
-                    >
-                        {pcGPU.brand} {pcGPU.model}
-                    </p>
-                ))
-            ) : (
-                <p>Loading or no cases found...</p>
-            )}
-            </div>
-            <div className="parts">
-                <h2>Motherboard</h2>
-                {Array.isArray(mbs) && mbs.length > 0 ? (
-                mbs.map((pcCPU) => (
-                    <p 
-                        key={pcCPU.id} 
-                        className={`partItems ${selectedMB === pcCPU.id ? 'selected' : ''}`}
-                        onClick = {() => setSelectedMB(pcCPU.id)}
-                    >
-                        {pcCPU.brand} {pcCPU.model}
-                    </p>
-                ))
-            ) : (
-                <p>Loading or no cases found...</p>
-            )}
-            </div>
-            <div className="parts">
-                <h2>RAM</h2>
-                {Array.isArray(rams) && rams.length > 0 ? (
-                rams.map((pcCPU) => (
-                    <p 
-                        key={pcCPU.id} 
-                        className={`partItems ${selectedRAM === pcCPU.id ? 'selected' : ''}`}
-                        onClick = {() => setSelectedRAM(pcCPU.id)}
-                    >
-                        {pcCPU.brand} {pcCPU.model}
-                    </p>
-                ))
-            ) : (
-                <p>Loading or no cases found...</p>
-            )}
-            </div>
-            <div className="parts">
-                <h2>Storage</h2>
-                {Array.isArray(store) && store.length > 0 ? (
-                store.map((pcCPU) => (
-                    <p 
-                        key={pcCPU.id} 
-                        className={`partItems ${selectedStore === pcCPU.id ? 'selected' : ''}`}
-                        onClick = {() => setSelectedStore(pcCPU.id)}
-                    >
-                        {pcCPU.brand} {pcCPU.model}
-                    </p>
-                ))
-            ) : (
-                <p>Loading or no cases found...</p>
-            )}
-            </div>
-            <div className="parts">
-                <h2>CPU Cooler</h2>
-                {Array.isArray(cools) && cools.length > 0 ? (
-                cools.map((pcCPU) => (
-                    <p 
-                        key={pcCPU.id} 
-                        className={`partItems ${selectedCool === pcCPU.id ? 'selected' : ''}`}
-                        onClick = {() => setSelectedCool(pcCPU.id)}
-                    >
-                        {pcCPU.brand} {pcCPU.model}
-                    </p>
-                ))
-            ) : (
-                <p>Loading or no cases found...</p>
-            )}
-            </div>
-            <div className="parts">
-                <h2>PSU</h2>
-                {Array.isArray(psus) && psus.length > 0 ? (
-                psus.map((pcCPU) => (
-                    <p 
-                        key={pcCPU.id} 
-                        className={`partItems ${selectedPSU === pcCPU.id ? 'selected' : ''}`}
-                        onClick = {() => setSelectedPSU(pcCPU.id)}
-                    >
-                        {pcCPU.brand} {pcCPU.model}
-                    </p>
-                ))
-            ) : (
-                <p>Loading or no cases found...</p>
-            )}
-            </div>
+                <div className="parts">
+                    <h2>Case</h2>
+                    {Array.isArray(cases) && cases.length > 0 ? (
+                    cases.map((pcCase) => (
+                        <p 
+                            key={pcCase.id} 
+                            className={`partItems ${selectedCase === pcCase.id ? 'selected' : ''}`}
+                            onClick = {() => setSelectedCase(pcCase.id)}
+                        >
+                            {pcCase.brand} {pcCase.model}
+                        </p>
+                    ))
+                ) : (
+                    <p>Loading or no cases found...</p>
+                )}
+                </div>
+                <div className="parts">
+                    <h2>CPU</h2>
+                    {Array.isArray(cpus) && cpus.length > 0 ? (
+                    cpus.map((pcCPU) => (
+                        <p 
+                            key={pcCPU.id} 
+                            className={`partItems ${selectedCPU === pcCPU.id ? 'selected' : ''}`}
+                            onClick = {() => setSelectedCPU(pcCPU.id)}
+                        >
+                            {pcCPU.brand} {pcCPU.model}
+                        </p>
+                    ))
+                ) : (
+                    <p>Loading or no cases found...</p>
+                )}
+                </div>
+                <div className="parts">
+                    <h2>GPU</h2>
+                    {Array.isArray(gpus) && gpus.length > 0 ? (
+                    gpus.map((pcGPU) => (
+                        <p 
+                            key={pcGPU.id} 
+                            className={`partItems ${selectedGPU === pcGPU.id ? 'selected' : ''}`}
+                            onClick = {() => setSelectedGPU(pcGPU.id)}
+                        >
+                            {pcGPU.brand} {pcGPU.model}
+                        </p>
+                    ))
+                ) : (
+                    <p>Loading or no cases found...</p>
+                )}
+                </div>
+                <div className="parts">
+                    <h2>Motherboard</h2>
+                    {Array.isArray(mbs) && mbs.length > 0 ? (
+                    mbs.map((pcCPU) => (
+                        <p 
+                            key={pcCPU.id} 
+                            className={`partItems ${selectedMB === pcCPU.id ? 'selected' : ''}`}
+                            onClick = {() => setSelectedMB(pcCPU.id)}
+                        >
+                            {pcCPU.brand} {pcCPU.model}
+                        </p>
+                    ))
+                ) : (
+                    <p>Loading or no cases found...</p>
+                )}
+                </div>
+                <div className="parts">
+                    <h2>RAM</h2>
+                    {Array.isArray(rams) && rams.length > 0 ? (
+                    rams.map((pcCPU) => (
+                        <p 
+                            key={pcCPU.id} 
+                            className={`partItems ${selectedRAM === pcCPU.id ? 'selected' : ''}`}
+                            onClick = {() => setSelectedRAM(pcCPU.id)}
+                        >
+                            {pcCPU.brand} {pcCPU.model}
+                        </p>
+                    ))
+                ) : (
+                    <p>Loading or no cases found...</p>
+                )}
+                </div>
+                <div className="parts">
+                    <h2>Storage</h2>
+                    {Array.isArray(store) && store.length > 0 ? (
+                    store.map((pcCPU) => (
+                        <p 
+                            key={pcCPU.id} 
+                            className={`partItems ${selectedStore === pcCPU.id ? 'selected' : ''}`}
+                            onClick = {() => setSelectedStore(pcCPU.id)}
+                        >
+                            {pcCPU.brand} {pcCPU.model}
+                        </p>
+                    ))
+                ) : (
+                    <p>Loading or no cases found...</p>
+                )}
+                </div>
+                <div className="parts">
+                    <h2>CPU Cooler</h2>
+                    {Array.isArray(cools) && cools.length > 0 ? (
+                    cools.map((pcCPU) => (
+                        <p 
+                            key={pcCPU.id} 
+                            className={`partItems ${selectedCool === pcCPU.id ? 'selected' : ''}`}
+                            onClick = {() => setSelectedCool(pcCPU.id)}
+                        >
+                            {pcCPU.brand} {pcCPU.model}
+                        </p>
+                    ))
+                ) : (
+                    <p>Loading or no cases found...</p>
+                )}
+                </div>
+                <div className="parts">
+                    <h2>PSU</h2>
+                    {Array.isArray(psus) && psus.length > 0 ? (
+                    psus.map((pcCPU) => (
+                        <p 
+                            key={pcCPU.id} 
+                            className={`partItems ${selectedPSU === pcCPU.id ? 'selected' : ''}`}
+                            onClick = {() => setSelectedPSU(pcCPU.id)}
+                        >
+                            {pcCPU.brand} {pcCPU.model}
+                        </p>
+                    ))
+                ) : (
+                    <p>Loading or no cases found...</p>
+                )}
+                </div>
+
+                <div className="forms">
+                    <form onSubmit={(e) => {e.preventDefault();check();}}>
+                        <button type="submit" className="smt-btn">Check Compatibility</button>
+                    </form>
+                    <form onSubmit={(e) => {e.preventDefault();save();}}>
+                        <button type="submit" className="smt-btn">Save Build</button>
+                    </form>
+                </div>
             </div>
         </div>
     );
