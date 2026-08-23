@@ -30,6 +30,10 @@ BuildForge checks whether selected PC components can work together, identifies c
 - Error handling
 - REST API
 
+## Frontend Screenshot
+![alt text](image.png)
+
+
 ## Status
 
 - [x] PostgreSQL database
@@ -38,6 +42,6 @@ BuildForge checks whether selected PC components can work together, identifies c
 - [x] Error handling
 - [x] API responses
 - [x] React frontend setup
-- [ ] Frontend UI
+- [x] Frontend UI
 - [ ] Docker
 - [ ] AI/ML Price Analyzer
