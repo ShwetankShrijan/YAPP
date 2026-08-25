@@ -69,9 +69,6 @@ h2 {
     font-size: 20px;
   }
 }
-p {
-  margin: 0;
-}
 
 a{
   text-decoration: none;
@@ -155,8 +152,8 @@ a:hover{
 }
 
 .partItems.selected {
-  background-color: #4ea8de; /* Turns the background neon blue */
-  color: #000000;            /* Swaps text to black for easy reading */
+  background-color: #4ea8de; 
+  color: #000000;
   font-weight: bold;
 }
 
