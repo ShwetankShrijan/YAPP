@@ -1,4 +1,4 @@
-# BUILD FORGE
+# YAPP - YET ANOTHER PRICE PREDICTOR
 
 ## Made With
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -19,7 +19,7 @@ I wanted to build a tool that makes PC building easier by automatically checking
 
 ## What It Solves
 
-BuildForge checks whether selected PC components can work together, identifies compatibility issues, and aims to help users make better purchasing decisions based on component prices.
+YAPP checks whether selected PC components can work together, identifies compatibility issues, and aims to help users make better purchasing decisions based on component prices.
 
 ## Features
 
