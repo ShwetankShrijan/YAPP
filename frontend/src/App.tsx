@@ -138,7 +138,7 @@ function App() {
         <div>
             <nav className="navbar">
                 <div className="nav-logo">
-                    <h1>BuildForge</h1>
+                    <h1>YAPP</h1>
                     <h3>Price Analyzer and Compatibility Checker</h3>
                 </div>
                 <ul className="nav-links">
