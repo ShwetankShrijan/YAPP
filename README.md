@@ -95,7 +95,7 @@ Instead, a strictly chronological **80:20 Train-Test split** was used:
 - REST API
 
 ## Frontend Screenshot
-![alt text](image.png)
+![alt text](image-2.png)
 ---
 ![alt text](image-1.png)
 
