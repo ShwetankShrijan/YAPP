@@ -189,3 +189,14 @@ button:hover{
   margin-top: 5%;
   margin-left: 6%;
 }
+
+.predict_head{
+  margin-top: 5%;
+  margin-left: 2.5%;
+}
+
+.graph {
+    width: 90%;
+    height: 450px;
+    margin: 65px auto 40px auto;
+}
