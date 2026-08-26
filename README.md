@@ -80,7 +80,7 @@ Instead, a strictly chronological **80:20 Train-Test split** was used:
 ### Key Takeaways & Model Selection
 
 * **Extrapolation Advantage:** Linear models naturally capture upward or downward trajectory trends beyond historical boundaries, making them better suited for price forecasting than decision trees.
-* **Baseline Bias:** High initial $R^2$ values occur because today's price is strongly correlated with yesterday's price (`previous_price`). Evaluating strictly against future dates (chronological split) was required to measure true accuracy.
+* **Baseline Bias:** High initial **R^2** values occur because today's price is strongly correlated with yesterday's price (`previous_price`). Evaluating strictly against future dates (chronological split) was required to measure true accuracy.
 * **Selected Model:** Standard **Linear Regression** was selected and exported as a persistent artifact to `ml/models/linearRegressionModel.pkl` via `joblib`.
 
 
