@@ -9,6 +9,8 @@ from .schemas import PCSelection
 
 from fastapi.middleware.cors import CORSMiddleware # this is the import for the not understood part 
 
+from ml.src.predict import predict_price
+
 app = FastAPI()
 
 app.add_middleware(
@@ -256,3 +258,10 @@ def check_compatibility(selection: PCSelection):
         },
         "issues":issues
     }
+
+@app.get("/predict")
+def prediction():
+
+    results = predict_price("ml/data/raw/ramradar-price-index.csv")
+
+    return results.to_dict(orient="records")
